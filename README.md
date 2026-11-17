@@ -1,220 +1,339 @@
-# Qasida — AI-Powered Digital Archive for Ginans & Qasidas
+<div align="center">
 
-**A full-stack, hypermedia-driven digital archive and multi-page AI OCR & bi-directional transliteration engine for preserving traditional devotional poetry across Roman and Arabic/Persian/Urdu scripts.**
+<a href="https://theqasida.com">
+  <img src="./assets/logo.png" alt="Qasida" width="360" />
+</a>
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Django](https://img.shields.io/badge/Django-4.2-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
-[![HTMX](https://img.shields.io/badge/HTMX-1.26-3366CC?style=for-the-badge&logo=htmx&logoColor=white)](https://htmx.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Google Cloud Vision](https://img.shields.io/badge/Cloud_Vision_OCR-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white)](https://cloud.google.com/vision)
-[![Google Gemini](https://img.shields.io/badge/Google_Gemini_AI-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white)](https://ai.google.dev/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon_DB-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://neon.tech/)
-[![Render](https://img.shields.io/badge/Deployed_on-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://render.com/)
+### A community archive of Ginans & Qasidas, with AI that turns photos of old books into lyrics in both Roman and Arabic script
+
+<p>
+  <a href="https://theqasida.com"><img src="https://img.shields.io/badge/Live-theqasida.com-0891B2?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Live Site" /></a>
+  <a href="./ARCHITECTURE.md"><img src="https://img.shields.io/badge/Docs-Architecture-1F2937?style=for-the-badge&logo=readthedocs&logoColor=white" alt="Architecture" /></a>
+  <img src="https://img.shields.io/badge/Source-Private-6B7280?style=for-the-badge&logo=github&logoColor=white" alt="Private Source" />
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/Django_4.2-092E20?style=flat-square&logo=django&logoColor=white" alt="Django" />
+  <img src="https://img.shields.io/badge/HTMX-3366CC?style=flat-square&logo=htmx&logoColor=white" alt="HTMX" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Google_Gemini-8E75B2?style=flat-square&logo=googlegemini&logoColor=white" alt="Gemini" />
+  <img src="https://img.shields.io/badge/Cloud_Vision-4285F4?style=flat-square&logo=googlecloud&logoColor=white" alt="Cloud Vision" />
+  <img src="https://img.shields.io/badge/Render-46E3B7?style=flat-square&logo=render&logoColor=black" alt="Render" />
+</p>
+
+<p>
+  <a href="#-overview">Overview</a> •
+  <a href="#-demo">Demo</a> •
+  <a href="#-the-problem">Problem</a> •
+  <a href="#-architecture">Architecture</a> •
+  <a href="#-engineering-highlights">Highlights</a> •
+  <a href="#-data-model">Data Model</a> •
+  <a href="#-source-code-access">Access</a>
+</p>
+
+</div>
 
 ---
 
-## Live Deployment & Demo
+## 📖 Overview
 
-> **Live Application:** **[Launch Qasida Live Demo](https://your-live-deployment-url.com)** *(Replace with active production URL)*
+**[Qasida](https://theqasida.com)** is a full-stack web archive for traditional devotional poetry (Ginans and Qasidas). Readers can search the collection, switch between **Roman transliteration** and **right-to-left Arabic/Urdu script** with one tap, and listen to recordings. Contributors can **photograph up to 10 pages of a physical booklet**. An AI pipeline then extracts the verses and produces both scripts automatically.
 
-![Qasida Walkthrough Demo](./assets/demo.gif)
+<table>
+  <tr>
+    <td width="33%" valign="top">
+      <h4>🔎 Instant search</h4>
+      Search updates as you type and matches across titles, poets and languages, all without a page reload.
+    </td>
+    <td width="33%" valign="top">
+      <h4>🔤 Two scripts per work</h4>
+      Read each work in Roman or RTL Arabic/Urdu script, with an embedded YouTube recording.
+    </td>
+    <td width="33%" valign="top">
+      <h4>📸 AI page scanner</h4>
+      Turns photos of up to 10 pages into lyrics in both scripts using Cloud Vision and Gemini.
+    </td>
+  </tr>
+  <tr>
+    <td width="33%" valign="top">
+      <h4>🛡️ Moderated contributions</h4>
+      New uploads stay hidden until an admin approves them. Admins can approve in bulk.
+    </td>
+    <td width="33%" valign="top">
+      <h4>⚡ Fast navigation without a JS framework</h4>
+      HTMX swaps in page fragments, but every URL still renders as a full page on its own.
+    </td>
+    <td width="33%" valign="top">
+      <h4>🌐 Built for search engines</h4>
+      Pages include JSON-LD, OpenGraph tags, dynamic sitemaps and a <code>robots.txt</code>.
+    </td>
+  </tr>
+</table>
 
 ---
 
-## Problem & Motivation
+## 🎬 Demo
 
-Traditional **Ginans** and **Qasidas** (devotional poetry composed across Urdu, Persian, Arabic, Gujarati, and Sindhi traditions) have historically lived scattered across aging printed books, fragile community booklets, and handwritten family notebooks. Finding a specific set of verses—or reading them if you only know either the Latin (Roman) alphabet or the nastaliq/Arabic script—has long been a barrier for younger generations, researchers, and global community members.
+<div align="center">
 
-Digitizing this corpus manually presents three distinct technical hurdles:
-1. **Multi-Script Accessibility:** Readers require both **Roman transliteration** and **right-to-left (RTL) Arabic/Persian/Urdu script** side by side, yet physical manuscripts typically exist in only one script.
-2. **High-Friction Digitization:** Transcribing multi-page handwritten or printed devotional booklets by hand—and then manually transliterating every stanza into its counterpart script—is tedious and error-prone.
-3. **Mobile-First Performance & Discoverability:** Users frequently look up verses on mobile devices in low-connectivity community spaces, requiring SPA-like instant navigation and search without sacrificing server-rendered SEO, OpenGraph metadata, or Schema.org structured data.
+**🌐 Live at [theqasida.com](https://theqasida.com)**
 
-**Qasida** solves these problems by combining a **Django + HTMX hypermedia architecture** with a **hybrid Google Cloud Vision + Gemini multimodal AI pipeline** that lets contributors snap up to 10 sequential pages of a physical booklet from their phone camera, automatically extracting the verses and generating synchronized Roman and Arabic/Urdu script versions in seconds.
+<img src="./assets/demo.gif" alt="Qasida walkthrough" width="85%" />
+
+</div>
+
+<br />
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="./assets/01-home-search-filter.png" alt="Home search and language filters" /><br />
+      <sub><b>Home</b>: search as you type, plus language filter buttons</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="./assets/02-dual-script-reader.png" alt="Dual-script reader" /><br />
+      <sub><b>Reader</b>: Roman / Arabic toggle with an embedded YouTube player</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="./assets/03-ai-lyrics-scanner.png" alt="AI multi-page scanner" /><br />
+      <sub><b>AI scanner</b>: queue up to 10 pages for extraction</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="./assets/04-contributor-profile.png" alt="Profile" /><br />
+      <sub><b>Profiles</b>: a poet's works and a contributor's uploads</sub>
+    </td>
+  </tr>
+</table>
 
 ---
 
-## System Architecture
+## 🧩 The Problem
 
-The diagram below illustrates the actual runtime architecture of the application, detailing the dual-template HTMX rendering layer, the moderated community contribution workflow, and the hybrid Vision/Gemini OCR & transliteration pipeline:
+Lyrics for Ginans and Qasidas are scattered across old printed books, worn community booklets and handwritten family notebooks. Digitizing them raises three engineering problems:
+
+| Challenge | Why it's hard | How Qasida solves it |
+| :-- | :-- | :-- |
+| **Two scripts** | Readers need Roman *and* RTL Arabic/Urdu text, but a source page usually has only one. | AI transliteration generates the missing script, and both are stored on the same record. |
+| **Slow manual transcription** | Typing out multi-page booklets and then transliterating them by hand takes a long time and introduces mistakes. | Contributors photograph up to 10 pages. The text is extracted in page order with a single scan. |
+| **Mobile speed vs. SEO** | Users mostly browse on phones. An SPA would be fast but harder to index; plain server-rendered pages are easy to index but slower to navigate. | HTMX loads page fragments for in-app navigation, and every URL also renders as a full, crawlable page. |
+
+---
+
+## 🏗 Architecture
 
 ```mermaid
 graph TD
-    subgraph Client["Browser Client (Mobile & Desktop)"]
-        UI["Tailwind CSS Responsive UI<br/>(LTR Roman & RTL Arabic Toggles)"]
-        HTMX["HTMX Hypermedia Engine<br/>(hx-get, hx-post, hx-push-url, Debounced Search)"]
-        Cam["Multi-Page Camera Scanner<br/>(HTML5 Canvas Resize <=1500px, JPEG 0.82)"]
+    subgraph CLIENT["🖥️ Browser Client"]
+        UI["Tailwind UI<br/>Roman LTR / Arabic RTL"]
+        HX["HTMX Engine<br/>hx-get, hx-post, hx-push-url"]
+        CAM["Multi-Page Scanner<br/>Canvas resize to 1500px, JPEG 0.82"]
     end
 
-    subgraph Edge["WSGI & Static Serving (Render)"]
-        Gunicorn["Gunicorn WSGI Server"]
-        WhiteNoise["WhiteNoise Compressed Static Storage"]
-        Middleware["Django Middleware Stack<br/>(Security, CSRF, Auth, HtmxMiddleware)"]
+    subgraph EDGE["🚀 Render Web Service"]
+        GU["Gunicorn WSGI"]
+        WN["WhiteNoise<br/>Compressed Static Files"]
+        MW["Middleware<br/>Security, CSRF, Auth, HTMX"]
     end
 
-    subgraph Core["Django 4.2 Application (`ginan` & `qasida`)"]
-        Router["URL Dispatcher & SEO Engine<br/>(Dynamic Sitemaps, robots.txt, JSON-LD)"]
-        Views["Hybrid View Controllers<br/>(Full Page vs. Partial Fragment Switch)"]
-        Search["Multi-Keyword Q-Object Search<br/>& Category Filter Engine"]
-        Upload["Upload & Moderation Workflow<br/>(Poet De-duplication, YouTube ID Parser)"]
-        ScanAPI["AI Lyrics Extraction Endpoint<br/>(`POST /api/scan-lyrics/`)"]
-        Pillow["Pillow Image Normalizer<br/>(EXIF Transpose, RGB Convert, <=1600px)"]
+    subgraph APP["🐍 Django Application"]
+        RT["URL Router<br/>Sitemaps, robots.txt"]
+        VW["Views<br/>Full Page or HTMX Partial"]
+        SR["Search Engine<br/>Multi-token Q objects"]
+        UP["Upload and Moderation<br/>Poet dedupe, YouTube ID parser"]
+        API["Scan API<br/>POST /api/scan-lyrics/"]
+        PIL["Pillow Normalizer<br/>EXIF fix, RGB, 1600px max"]
     end
 
-    subgraph AI["Hybrid AI OCR & Transliteration Pipeline"]
-        Circuit["In-Memory Circuit Breaker<br/>(`_VISION_DISABLED_UNTIL` 300s Cooldown)"]
-        Vision["Google Cloud Vision API<br/>(`DOCUMENT_TEXT_DETECTION` + Language Hints)"]
-        ScriptDetect["Unicode Script Classifier<br/>(`_is_arabic_script` Ratio > 0.5)"]
-        Gemini["Google Gemini Multimodal Failover Cascade<br/>(Flash 3.5 -> 3.6 -> 3.1-Lite -> 3.8)"]
+    subgraph AI["🤖 AI Pipeline"]
+        CB{"Circuit Breaker<br/>300s cooldown on 403"}
+        CV["Google Cloud Vision<br/>DOCUMENT_TEXT_DETECTION"]
+        SD["Unicode Script Detector<br/>Arabic ratio over 50%"]
+        GM["Gemini Model Cascade<br/>4 Flash models, fast failover"]
     end
 
-    subgraph Data["Persistence Layer"]
-        DB[("PostgreSQL (Neon) / SQLite<br/>CustomUser, Poet, Language, Ginan, Suggestion")]
+    subgraph DATA["🗄️ Persistence"]
+        DB[("PostgreSQL on Neon<br/>SQLite locally")]
     end
 
-    UI --> HTMX
-    HTMX -->|AJAX / Full Request| Gunicorn
-    Cam -->|Base64 JSON Array (Up to 10 Pages)| Gunicorn
-    Gunicorn --> WhiteNoise
-    WhiteNoise --> Middleware
-    Middleware --> Router
+    UI --> HX
+    HX -->|"HTMX or full request"| GU
+    CAM -->|"Base64 JSON, up to 10 pages"| GU
+    GU --> WN --> MW --> RT
+    RT --> VW
+    RT --> API
+    VW --> SR --> DB
+    VW --> UP --> DB
+    API --> PIL --> CB
+    CB -->|"Primary OCR"| CV
+    CV --> SD
+    SD -->|"Transliterate other script"| GM
+    CB -->|"Fallback: multimodal OCR"| GM
+    GM -->|"JSON: roman + arabic"| API
 
-    Router --> Views
-    Views --> Search
-    Views --> Upload
-    Router --> ScanAPI
-
-    Search --> DB
-    Upload --> DB
-
-    ScanAPI --> Pillow
-    Pillow --> Circuit
-    Circuit -->|Primary OCR Path| Vision
-    Vision -->|Extracted Text| ScriptDetect
-    ScriptDetect -->|Counterpart Script Prompt| Gemini
-    Circuit -->|Fallback / Direct Multimodal Path| Gemini
-    Gemini -->|Structured JSON: Roman + Arabic Lyrics| ScanAPI
+    classDef client fill:#ECFEFF,stroke:#0891B2,color:#0E7490
+    classDef edge fill:#F0FDF4,stroke:#16A34A,color:#166534
+    classDef app fill:#F8FAFC,stroke:#334155,color:#0F172A
+    classDef ai fill:#F5F3FF,stroke:#7C3AED,color:#5B21B6
+    classDef data fill:#EFF6FF,stroke:#2563EB,color:#1E40AF
+    class UI,HX,CAM client
+    class GU,WN,MW edge
+    class RT,VW,SR,UP,API,PIL app
+    class CB,CV,SD,GM ai
+    class DB data
 ```
 
----
-
-## Key Engineering Highlights
-
-### 1. Hybrid Multi-Page AI OCR & Bi-Directional Transliteration Pipeline (`views.py`)
-Rather than relying on a single brittle external API call, the `/api/scan-lyrics/` endpoint implements a resilient, two-stage extraction and transliteration pipeline supporting up to **10 sequential book pages** per scan:
-- **Stage 1 (Dual-Stage Image Normalization):** On the client side, selected camera photos are sequentially drawn onto an HTML5 `<canvas>`, scaled to a maximum dimension of `1500px`, and compressed to JPEG (`0.82` quality) to preserve page ordering while minimizing upload bandwidth. On the server side, `_normalize_image_bytes()` uses **Pillow (`ImageOps.exif_transpose`)** to fix mobile camera orientation metadata, normalize color spaces to `RGB`, and clamp dimensions to `1600px` (`LANCZOS` resampling).
-- **Stage 2 (Cloud Vision OCR + Circuit Breaker):** The backend first attempts high-accuracy `DOCUMENT_TEXT_DETECTION` via the **Google Cloud Vision API** configured with regional language hints (`['ur', 'ar', 'fa', 'en', 'hi-t-i0-und']`). If Cloud Vision returns an HTTP `403` (e.g., quota/billing restrictions), an in-memory circuit breaker (`_VISION_DISABLED_UNTIL`) trips for **300 seconds**, bypassing the Vision request on subsequent scans to eliminate a 3-second latency penalty.
-- **Stage 3 (Unicode Script Heuristic & Multi-Model Gemini Failover):** When Vision succeeds, `_is_arabic_script()` inspects the Unicode codepoint distribution (`\u0600–\u06FF`, `\u0750–\u077F`, `\uFB50–\uFDFF`, `\uFE70–\uFEFF`). If >50% of alphabetic characters belong to Arabic/Persian/Urdu blocks, Gemini is prompted strictly to transliterate into Roman script (and vice versa). If Vision is bypassed, Gemini processes all normalized page images in a single multimodal call—ignoring adjacent page bleed and headers—to output structured JSON containing both scripts. The caller automatically fails over across an ordered model cascade (`gemini-3.5-flash` -> `gemini-3.6-flash` -> `gemini-3.1-flash-lite` -> `gemini-3.8-flash`) with `thinking_budget=0` for low-latency execution.
-
-### 2. Dual-Template HTMX Hypermedia Architecture
-Every primary view in `qasida/views.py` inspects `request.htmx` (injected via `django-htmx`'s `HtmxMiddleware`):
-- **HTMX Partial Requests (`request.htmx == True`):** Returns lightweight HTML fragments (`partials/home-partial.html`, `partials/ginan-content.html`, `partials/poet-profile-partial.html`, etc.) that swap directly into `#content-area` with `hx-push-url="true"`, updating the browser `<title>` dynamically and firing Google Analytics page-path events without a full page reload.
-- **Direct / Crawler Requests (`request.htmx == False`):** Renders the full inheritance hierarchy (`qasida/base.html` -> `qasida/ginan-content-full.html`), ensuring deep links, browser refreshes, and search engine crawlers receive complete HTML documents with canonical URLs, OpenGraph tags, and JSON-LD schema markup.
-
-### 3. Multi-Token `Q` Object Search Reduction & Debounced Live Filtering
-The search engine (`views.py:search`) pairs an HTMX input trigger (`hx-trigger="keyup delay:500ms changed"`) with a multi-token relational query builder. Rather than matching the raw query string literally, the backend splits the input into individual search tokens and maps each token into a disjunctive `Q(title__icontains=word) | Q(poet__name__icontains=word) | Q(language__name__icontains=word)` clause. These clauses are combined via `functools.reduce(operator.and_, word_queries)` with `.distinct()`, allowing a user searching `"farsi nasir"` to immediately locate Persian works by Pir Nasir Khusraw in a single SQL query.
-
-### 4. Smart Entity De-Duplication, Validation & Moderation Gatekeeping
-Community-contributed archives frequently suffer from duplicate author records and unverified submissions. The upload workflow (`views.py:upload` and `models.py:Ginan`) enforces strict data hygiene:
-- **Case-Insensitive Poet De-duplication:** Contributors can attribute a work to `"Unknown"` (resolved via `Poet.objects.get_or_create`), select an existing poet, or enter a new poet name. When a new name is submitted, the backend checks `Poet.objects.filter(name__iexact=new_poet_name).first()` before creating a `.title()`-normalized record, preventing case-variant duplicates.
-- **Cross-Field Model Validation:** `Ginan.clean()` overrides Django's model validation lifecycle (invoked via `ginan.full_clean()`) to guarantee that at least one lyric script (`lyrics_roman` or `lyrics_arabic`) is populated before saving.
-- **Access-Controlled Moderation State:** Newly uploaded Ginans default to `is_approved=False`. Unapproved records are excluded from public querysets, search results, poet profiles, and XML sitemaps. In `ginanContent`, unapproved entries raise an `Http404` unless the requester is the original `submitted_by` author or a `superuser`. Admins can bulk-approve verified submissions via the custom `make_approved` action in Django Admin.
-
-### 5. Automated SEO & Structured Metadata Engine
-To maximize organic discoverability of rare devotional lyrics, the application dynamically generates:
-- **Schema.org `CreativeWork` JSON-LD:** Embedded in every full Ginan page (`ginan-content-full.html`), exposing the work's headline, author (`Person`), language (`inLanguage`), and lyric excerpt to search indexers.
-- **Priority-Weighted XML Sitemaps (`sitemaps.py`):** Automatically indexes approved Ginans (`priority=0.9`, ordered by `-uploaded_on`), Poets excluding `"Unknown"` (`priority=0.7`), and static views (`priority=0.8`), paired with a dynamic `/robots.txt` endpoint that advertises the absolute sitemap URI while disallowing `/admin/` and `/api/`.
+> 📐 For request lifecycles, state management and security details, see **[ARCHITECTURE.md](./ARCHITECTURE.md)**.
 
 ---
 
-## Database & Data Model Overview
+## ⚙️ Engineering Highlights
 
-The persistence layer is built on **Django ORM**, running against **PostgreSQL (Neon)** in production and **SQLite** in local development.
+<details open>
+<summary><b>1. Fault-tolerant AI pipeline for OCR and transliteration</b></summary>
+<br />
+
+The `/api/scan-lyrics/` endpoint accepts **up to 10 page images** in a single request and processes them in stages:
+
+- **Image normalization on both client and server.** In the browser, each photo is resized to at most 1500px on a `<canvas>` and re-encoded as JPEG (quality 0.82). Files are read one after another so the page order is preserved. On the server, Pillow corrects phone-camera orientation (`exif_transpose`), converts to RGB and caps images at 1600px. All of this happens in memory, so photos are never written to disk.
+- **Cloud Vision first, with a circuit breaker.** The server first tries Cloud Vision `DOCUMENT_TEXT_DETECTION` with language hints for Urdu, Arabic, Persian, English and Hindi. If Vision returns `403`, a flag kept in worker memory turns Vision off for **300 seconds**. Later scans then skip the call instead of each waiting about 3 seconds for the same failure.
+- **Script detection by Unicode range.** The detector measures what share of the letters fall in the Arabic Unicode blocks. If it is over 50%, the text is treated as Arabic script and Gemini only needs to transliterate it into Roman, or the other way round.
+- **Gemini failover across models.** When Vision is unavailable, all pages go to Gemini in a single multimodal call, which returns structured JSON containing both scripts. Requests try four Flash models in order, with one attempt each and `thinking_budget=0`, so an overloaded model fails fast and the next one takes over.
+
+</details>
+
+<details>
+<summary><b>2. Every view serves both HTMX partials and full pages</b></summary>
+<br />
+
+Every view checks `request.htmx`, which the `django-htmx` middleware sets:
+
+- **HTMX request:** returns just a fragment that replaces `#content-area`. The URL is pushed to browser history, the `<title>` is updated, and an analytics pageview is fired.
+- **Direct request or crawler:** renders the full template hierarchy, including the canonical URL, OpenGraph tags and JSON-LD.
+
+The result feels like a single-page app, but the project has no JS framework, client-side router or separate API layer for pages.
+
+</details>
+
+<details>
+<summary><b>3. Multi-word search across related tables</b></summary>
+<br />
+
+The search box sends a request 500ms after the user stops typing (`hx-trigger="keyup delay:500ms changed"`). On the server, the query is split into words. Each word becomes an OR filter across `title`, `poet__name` and `language__name`, and the per-word filters are combined with AND:
+
+```python
+reduce(operator.and_, [
+    Q(title__icontains=w) | Q(poet__name__icontains=w) | Q(language__name__icontains=w)
+    for w in words
+])
+```
+
+So a query mixing a poet's name and a language returns only the works that match both, in one SQL query using `.distinct()`.
+
+</details>
+
+<details>
+<summary><b>4. Data hygiene and moderation</b></summary>
+<br />
+
+- **Duplicate poets are prevented.** New poet names are looked up case-insensitively (`name__iexact`) before a record is created, and stored names are normalized with `.title()`.
+- **At least one script is required.** `Ginan.clean()` rejects a submission unless it has Roman lyrics, Arabic lyrics or both. The upload view enforces this through `full_clean()`.
+- **Unapproved works are hidden.** New works are saved with `is_approved=False` and are left out of listings, search results, poet pages and sitemaps. Opening an unapproved work directly returns **404** unless you submitted it or are a superuser.
+- **Deletes don't lose lyrics.** If a poet is deleted, their works are reassigned to an `"Unknown"` poet (`SET_DEFAULT`). If a user is deleted, their uploads stay (`SET_NULL`).
+
+</details>
+
+<details>
+<summary><b>5. SEO and structured data</b></summary>
+<br />
+
+- **JSON-LD on every work page**, using the Schema.org `CreativeWork` type with the author, language and a lyrics excerpt. User-entered values are escaped with `escapejs`.
+- **Sitemaps with priorities:** works 0.9, static pages 0.8 and poets 0.7. Only approved works are listed, and the "Unknown" placeholder poet is excluded.
+- **A dynamic `robots.txt`** that points to the sitemap's absolute URL and blocks `/admin/` and `/api/`.
+- **Privacy-enhanced embeds.** YouTube links are reduced to their 11-character video ID when saved and played through `youtube-nocookie.com`.
+
+</details>
+
+---
+
+## 🗄 Data Model
 
 ```mermaid
 erDiagram
-    CustomUser ||--o{ Ginan : "submits (SET_NULL)"
-    CustomUser }o--o{ Ginan : "likes (M2M)"
-    CustomUser ||--o{ Suggestion : "authors (CASCADE)"
-    Poet ||--o{ Ginan : "composed (SET_DEFAULT -> Unknown)"
-    Language ||--o{ Ginan : "written_in (CASCADE)"
-    Ginan ||--o{ Suggestion : "receives (CASCADE)"
+    USER ||--o{ GINAN : submits
+    USER }o--o{ GINAN : likes
+    USER ||--o{ SUGGESTION : writes
+    POET ||--o{ GINAN : composed
+    LANGUAGE ||--o{ GINAN : "written in"
+    GINAN ||--o{ SUGGESTION : receives
 
-    CustomUser {
+    USER {
         bigint id PK
         string username UK
         string email
-        boolean is_superuser
-        datetime date_joined
     }
-
-    Poet {
+    POET {
         bigint id PK
-        string name UK "Max 100 chars, unique"
+        string name UK
     }
-
-    Language {
+    LANGUAGE {
         bigint id PK
-        string name UK "Max 100 chars, unique"
+        string name UK
     }
-
-    Ginan {
+    GINAN {
         bigint id PK
-        string title "Max 255 chars"
-        bigint poet_id FK "Defaults to Unknown Poet"
+        string title
+        bigint poet_id FK
         bigint language_id FK
-        bigint submitted_by_id FK "Nullable"
-        text lyrics_roman "Nullable (Required if no Arabic)"
-        text lyrics_arabic "Nullable (Required if no Roman)"
-        string youtube_video_id "Extracted 11-char ID, nullable"
-        uint views_count "Default 0"
-        boolean is_approved "Default False (Moderation Gate)"
-        datetime uploaded_on "auto_now_add"
+        bigint submitted_by_id FK
+        text lyrics_roman
+        text lyrics_arabic
+        string youtube_video_id
+        int views_count
+        boolean is_approved
+        datetime uploaded_on
     }
-
-    Suggestion {
+    SUGGESTION {
         bigint id PK
         bigint ginan_id FK
         bigint user_id FK
         text content
-        datetime created_at "auto_now_add"
+        datetime created_at
     }
 ```
 
-### Key Schema Design Decisions
-- **Safe Deletion Semantics (`SET_DEFAULT` & `SET_NULL`):** Deleting a `Poet` record triggers `on_delete=models.SET_DEFAULT` (calling `get_default_artist()` to reassign works to the `"Unknown"` poet record rather than losing historical lyrics). Similarly, deleting a `CustomUser` preserves their contributed Ginans via `on_delete=models.SET_NULL`.
-- **Privacy-Enhanced Media Normalization:** Rather than storing raw, inconsistent YouTube URLs (`youtu.be/...`, `youtube.com/watch?v=...`, `youtube.com/embed/...`), `extract_yt_id()` strips the input down to the canonical 11-character video ID on write, which is then rendered inside a privacy-enhanced `youtube-nocookie.com/embed/` iframe.
+| Relationship | On delete | Rationale |
+| :-- | :-- | :-- |
+| `Ginan → Poet` | `SET_DEFAULT` to "Unknown" | The lyrics are kept even if the poet record is removed |
+| `Ginan → User (submitted_by)` | `SET_NULL` | Uploads stay after the contributor's account is deleted |
+| `Ginan → Language` | `CASCADE` | Every work must have a language |
+| `Ginan ↔ User (likes)` | Many-to-many | Lays the groundwork for a "Trending" ranking |
 
 ---
 
-## Visual Tour & Screenshots
+## 🧰 Tech Stack
 
-> *See [`ASSETS_CHECKLIST.md`](./ASSETS_CHECKLIST.md) for instructions on capturing and dropping these visuals into `./assets/`.*
-
-| Home Search & Language Filtering | Dual-Script Reader (Roman & RTL Arabic) |
-| :---: | :---: |
-| ![Home Search & Filter](./assets/01-home-search-filter.png) | ![Dual Script Lyrics View](./assets/02-dual-script-reader.png) |
-| *Instant debounced HTMX search across titles, poets, and languages.* | *One-click toggle between Roman transliteration and RTL Arabic/Urdu script + YouTube playback.* |
-
-| Multi-Page AI Lyrics Scanner | Contributor Profile & Moderation Queue |
-| :---: | :---: |
-| ![AI Multi-Page Scanner](./assets/03-ai-lyrics-scanner.png) | ![Contributor Profile & Admin](./assets/04-contributor-profile.png) |
-| *Queue up to 10 camera/gallery pages for automated OCR and bi-directional transliteration.* | *Contributor upload tracking and admin bulk-approval workflow.* |
+| Layer | Technology |
+| :-- | :-- |
+| **Backend** | Python, Django 4.2, Gunicorn |
+| **Frontend** | HTMX (via `django-htmx`), Tailwind CSS 3 (via `django-tailwind`), vanilla JS |
+| **AI / ML** | Google Cloud Vision API, Google Gemini (`google-genai`), Pillow |
+| **Data** | PostgreSQL on Neon in production, SQLite locally, `dj-database-url` |
+| **Infra** | Render, WhiteNoise compressed static files, HSTS and SSL redirect |
 
 ---
 
-## Documentation Index
+## 🔒 Source Code Access
 
-- **[`ARCHITECTURE.md`](./ARCHITECTURE.md):** Deep-dive technical specification covering request lifecycles, state management, image normalization, AI failover logic, and production security hardening.
-- **[`ASSETS_CHECKLIST.md`](./ASSETS_CHECKLIST.md):** Exact checklist of screenshots and screen recordings to capture for this showcase.
-- **[`SETUP_PUBLIC_REPO.md`](./SETUP_PUBLIC_REPO.md):** Step-by-step Git instructions to publish this `_showcase/` directory as a standalone public repository with zero commit history from the private repo.
+> [!NOTE]
+> The full source of **Qasida** is kept **private** to protect the production configuration, API integrations and moderation workflow. This repository documents the architecture and engineering decisions of the system as it is built.
 
----
+**Recruiters, engineers and collaborators:** I'm happy to give a **live walkthrough** of the codebase or grant **temporary read access**. Reach out through **[GitHub @Kashan-A1i](https://github.com/Kashan-A1i)**.
 
-## Private Repository Notice
-
-> **Note on Source Code Availability:**  
-> To protect community moderation workflows, API integrations, and active production configurations, the full source code repository for **Qasida** is maintained privately. This showcase repository provides a comprehensive architectural and engineering overview of the system as built.
->
-> **For Recruiters, Engineers & Collaborators:**  
-> I am happy to provide a live technical walkthrough of the codebase, discuss the AI OCR/transliteration pipeline in detail, or grant temporary read access to the private repository upon request. Please reach out via **[GitHub (@Kashan-A1i)](https://github.com/Kashan-A1i)**.
+<div align="center">
+<br />
+<sub>Built to preserve a centuries-old devotional tradition for the next generation · <a href="https://theqasida.com">theqasida.com</a></sub>
+</div>

@@ -62,6 +62,7 @@ _showcase/
 ├── SETUP_PUBLIC_REPO.md
 └── assets/
     ├── .gitkeep
+    ├── logo.png            (already included)
     ├── demo.gif
     ├── 01-home-search-filter.png
     ├── 02-dual-script-reader.png
